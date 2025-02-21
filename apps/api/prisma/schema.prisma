@@ -14,6 +14,8 @@ model MenuItem {
   parentId  String?
   parent    MenuItem?  @relation("MenuHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
   children  MenuItem[] @relation("MenuHierarchy")
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime? 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
