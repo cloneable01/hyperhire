@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model MenuItem {
+  id        String     @id @default(cuid())
+  name      String
+  order     Int       @default(0)
+  parentId  String?
+  parent    MenuItem?  @relation("MenuHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children  MenuItem[] @relation("MenuHierarchy")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
