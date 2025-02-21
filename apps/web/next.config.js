@@ -5,8 +5,8 @@ const nextConfig = {
   images: {
     domains: ['localhost'],
   },
-  output: 'export',  // Add this line to generate static output
-  distDir: 'dist',   // Add this to specify the build directory
+  // output: 'export',
+  distDir: 'dist',
 };
 
 module.exports = nextConfig;
