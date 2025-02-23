@@ -1,21 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import * as express from 'express';
+import * as serverless from 'serverless-http';
+
+const app = express();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'https://hyperhire-snowy.vercel.app',
-      'https://hyperhire-git-main-cloneable01s-projects.vercel.app',
-      'https://hyperhire-api-dun.vercel.app',
-    ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: false,
-    allowedHeaders: ['Content-Type', 'Accept'],
+  const nestApp = await NestFactory.create(AppModule, new ExpressAdapter(app));
+  nestApp.enableCors({
+    origin: '*',
   });
-
-  await app.listen(process.env.PORT || 8000);
+  if (process.env.NODE_ENV === 'development') {
+    await nestApp.listen(8000);
+  } else {
+    await nestApp.init();
+  }
 }
+
 bootstrap();
+export const handler = serverless(app);

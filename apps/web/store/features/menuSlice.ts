@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = "http://localhost:8000";
 
 interface MenuItem {
   id: string;
@@ -30,7 +30,6 @@ const initialState: MenuState = {
 
 export const fetchMenus = createAsyncThunk("menu/fetchMenus", async () => {
   const response = await fetch(`${API_URL}/menus`, {
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -44,7 +43,7 @@ export const createMenuItem = createAsyncThunk(
   async (data: { name: string; parentId?: string; order?: number }) => {
     const response = await fetch(`${API_URL}/menus`, {
       method: "POST",
-      credentials: "include",
+
       headers: {
         "Content-Type": "application/json",
       },
@@ -60,7 +59,7 @@ export const updateMenuItem = createAsyncThunk(
   async ({ id, data }: { id: string; data: Partial<MenuItem> }) => {
     const response = await fetch(`${API_URL}/menus/${id}`, {
       method: "PUT",
-      credentials: "include",
+
       headers: {
         "Content-Type": "application/json",
       },
@@ -76,7 +75,7 @@ export const deleteMenuItem = createAsyncThunk(
   async (id: string) => {
     const response = await fetch(`${API_URL}/menus/${id}`, {
       method: "DELETE",
-      credentials: "include",
+
       headers: {
         "Content-Type": "application/json",
       },
