@@ -6,12 +6,12 @@ import { AppModule } from './app.module';
 // const app = express();
 
 async function bootstrap() {
-  const nestApp = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule);
 
-  nestApp.enableCors({
+  app.enableCors({
     origin: '*',
   });
 
-  await nestApp.listen(8000);
+  await app.listen(8000);
 }
 bootstrap();
