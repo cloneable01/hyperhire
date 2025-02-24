@@ -8,15 +8,16 @@ const app = express();
 
 async function bootstrap() {
   const nestApp = await NestFactory.create(AppModule, new ExpressAdapter(app));
+
   nestApp.enableCors({
     origin: '*',
   });
+
   if (process.env.NODE_ENV === 'development') {
     await nestApp.listen(8000);
   } else {
     await nestApp.init();
   }
 }
-
 bootstrap();
 export const handler = serverless(app);
